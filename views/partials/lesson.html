@@ -1,0 +1,81 @@
+<div>
+	<div class="pull-right">
+		<button type="button" id="cancel" class="btn btn-default btn-lg">{{ i18n.literals.CANCEL }}</button>
+		<button type="button" id="lesson-submit" class="btn btn-primary btn-lg">{{ i18n.literals.SUBMIT }}</button>
+	</div>
+	<h1 class="page-header">{{ i18n.literals.LESSON }}: <span id="lesson-descr">{{ lesson.descr }}</span></h1>
+</div>
+<div class="row">
+	<div class="col-md-8 col-lg-8">
+		<div class="embed-responsive embed-responsive-16by9">
+			<div id="player" class="embed-responsive-item"></div>
+		</div>
+		<input ng-model="value" type="text" slider options="slider" />
+<!--		<slider ng-model="test" floor="{{ slider.floor }}" ceiling="{{ slider.ceiling }}"></slider>
+		<div id="slider-wrap">
+			<input type="text" id="slider">
+		</div> -->
+	</div>
+	<div class="col-md-4 col-lg-4">
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ i18n.literals.PARAMETERS }}</h3>{{ pos }}
+			</div>
+			<div class="panel-body">
+				<form role="form">
+					<input type="hidden" name="videoid">
+					<div class="form-group">
+						<label for="description">{{ i18n.literals.DESCR }}</label>
+						<input type="text" class="form-control" ng-model="lesson.descr" placeholder="{{ i18n.literals.LESSON_DESCR}}">
+					</div>
+					<div class="form-group">
+						<label for="videourl">{{ i18n.literals.URL }}</label>
+						<input type="text" class="form-control" ng-model="videourl"	mg-model-options="{ updateOn: 'blur' }" 
+							placeholder="{{ i18n.literals.YT_URL }}">
+					</div>
+					<fieldset id="pbrange">
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="button" data-ourschool-action="setPBStart">
+										<span class="glyphicon glyphicon-film"></span>
+									</button>
+								</span>
+								<input type="text" class="form-control" placeholder="{{ i18n.literals.START }}" ng-model="lesson.pbstart">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="button" data-ourschool-action="setPBStop">
+										<span class="glyphicon glyphicon-film"></span>
+									</button>
+								</span>
+								<input type="text" class="form-control" placeholder="{{ i18n.literals.STOP }}" ng-model="lesson.pbstop">										
+							</div>
+							<span class="help-block">{{ i18n.literals.PLAYBACK }}</span>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" style="padding-top: 5px">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<h3 class="panel-title">Questions
+				<span class="glyphicon glyphicon-plus pull-right" id="add-question" style="cursor: pointer;" data-toggle="modal" data-target="#question"></span>
+			</h3>
+		</div>
+		<table class="table">
+			<thead>
+				<tr><th>#</th><th>Question</th><th>Type</th><th>Link</th><th>Actions</th></tr>							
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+  

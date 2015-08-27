@@ -1,0 +1,34 @@
+application: our-school-969
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /css
+  static_dir: css
+
+- url: /js
+  static_dir: js
+
+- url: /fonts
+  static_dir: fonts
+
+- url: /translations
+  static_dir: translations
+
+- url: /flags
+  static_dir: flags
+
+- url: /views/partials
+  static_dir: views/partials
+  
+- url: /.*
+  script: ourschool.application
+
+libraries:
+- name: webapp2
+  version: latest
+
+- name: jinja2
+  version: latest

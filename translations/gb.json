@@ -1,0 +1,20 @@
+{
+	"PROJECT": "Our School",
+	"DASHBOARD": "Dashboard",
+	"NEW_LESSON": "New Lesson",
+	"HELP": "Help",
+	"LESSONS": "Lessons",
+	"LESSON": "Lesson",
+	"NEW": "New",
+	"CANCEL": "Cancel",
+	"SUBMIT": "Submit",
+	"PARAMETERS": "Video Parameters",
+	"DESCR": "Description",
+	"URL": "Video URL",
+	"PLAYBACK": "Select playback range.",
+	"LESSON_DESCR": "Lesson Description",
+	"YT_URL": "YouTube Video URL",
+	"START": "Start",
+	"STOP": "Stop"
+}
+}
