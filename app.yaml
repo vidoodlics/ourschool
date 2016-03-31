@@ -1,5 +1,5 @@
 application: our-school-969
-version: 1
+version: 2
 runtime: python27
 api_version: 1
 threadsafe: true
@@ -20,9 +20,12 @@ handlers:
 - url: /flags
   static_dir: flags
 
+- url: /img
+  static_dir: img
+
 - url: /views/partials
   static_dir: views/partials
-  
+
 - url: /.*
   script: ourschool.application
 

@@ -61,8 +61,10 @@ body {
   padding-left: 20px;
 }
 .nav-sidebar > li > a > span {
+  line-height: inherit;
 	padding-left: 3px;
 }
+
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
@@ -87,42 +89,64 @@ body {
 .main .page-header {
   margin-top: 0;
 }
-
-
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-  margin-bottom: 30px;
-  text-align: center;
+/* From Bootstrap 3.2.0 */
+.embed-responsive {
+  position: relative;
+  display: block;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
 }
-.placeholders h4 {
-  margin-bottom: 0;
+.embed-responsive .embed-responsive-item,
+.embed-responsive iframe,
+.embed-responsive embed,
+.embed-responsive object {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
-.placeholder {
-  margin-bottom: 20px;
+.embed-responsive.embed-responsive-16by9 {
+  padding-bottom: 56.25%;
 }
-.placeholder img {
-  display: inline-block;
-  border-radius: 50%;
+.embed-responsive.embed-responsive-4by3 {
+  padding-bottom: 75%;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
 }
 
 span.flag-icon {
 	font-size: 18px;
 }
 
-.qedit, .qremove, .qlink {
-	cursor: pointer;	
-}
-#question form .input-group {
-	padding-bottom: 2px;
-}
-
-#multi div.input-group:first-of-type {
-	padding-top: 3px;
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }
 
-#add-question {
-	cursor: pointer;
+div.placeholder {
+  height: 20em;
+  position: relative;
+	margin: 10px;
+	border: 1px solid #BFBFBF;
+	padding: 5px;
+	border-radius: 15px;
+}
+
+div.placeholder p {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 }

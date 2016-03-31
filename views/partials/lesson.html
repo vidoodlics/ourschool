@@ -1,9 +1,10 @@
 <div>
-	<div class="pull-right">
-		<button type="button" id="cancel" class="btn btn-default btn-lg">{{ i18n.literals.CANCEL }}</button>
-		<button type="button" id="lesson-submit" class="btn btn-primary btn-lg">{{ i18n.literals.SUBMIT }}</button>
-	</div>
-	<h1 class="page-header">{{ i18n.literals.LESSON }}: <span id="lesson-descr">{{ lesson.descr }}</span></h1>
+    <div class="pull-right">
+        <button class="btn btn-success btn-lg" ng-show="lesson.id" ng-click="newOnCurrent()" ng-bind="i18n.literals.NEW"></button>
+        <button class="btn btn-default btn-lg" ng-click="cancel()" ng-bind="i18n.literals.CANCEL"></button>
+        <button class="btn btn-primary btn-lg" ng-click="submit()" ng-bind="i18n.literals.SAVE"></button>
+    </div>
+    <h1 class="page-header" ng-bind="i18n.literals.LESSON+': '+lesson.descr"></h1>
 </div>
 <div class="row">
 	<div class="col-md-8 col-lg-8">
@@ -11,49 +12,46 @@
 			<div id="player" class="embed-responsive-item"></div>
 		</div>
 		<input ng-model="value" type="text" slider options="slider" />
-<!--		<slider ng-model="test" floor="{{ slider.floor }}" ceiling="{{ slider.ceiling }}"></slider>
-		<div id="slider-wrap">
-			<input type="text" id="slider">
-		</div> -->
 	</div>
 	<div class="col-md-4 col-lg-4">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title">{{ i18n.literals.PARAMETERS }}</h3>{{ pos }}
+				<h3 class="panel-title" ng-bind="i18n.literals.PARAMETERS"></h3>
 			</div>
 			<div class="panel-body">
+                <alert type="{{ alertobj.type }}" close="alert=false" ng-show="alert" ng-bind="alertobj.msg"></alert>
 				<form role="form">
 					<input type="hidden" name="videoid">
 					<div class="form-group">
-						<label for="description">{{ i18n.literals.DESCR }}</label>
-						<input type="text" class="form-control" ng-model="lesson.descr" placeholder="{{ i18n.literals.LESSON_DESCR}}">
+						<label for="description" ng-bind="i18n.literals.DESCR"></label>
+						<input type="text" class="form-control" ng-model="lesson.descr" placeholder="{{ i18n.literals.LESSON_DESCR }}">
 					</div>
-					<div class="form-group">
-						<label for="videourl">{{ i18n.literals.URL }}</label>
-						<input type="text" class="form-control" ng-model="videourl"	mg-model-options="{ updateOn: 'blur' }" 
-							placeholder="{{ i18n.literals.YT_URL }}">
+					<div class="form-group" ng-class="{ 'has-error': playerError }" >
+						<label for="videourl" ng-bind="i18n.literals.URL"></label>
+						<input type="text" class="form-control" ng-model="lesson.videourl"
+                            ng-model-options="{ updateOn: 'blur' }"	placeholder="{{ i18n.literals.YT_URL }}">
 					</div>
 					<fieldset id="pbrange">
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-btn">
-									<button class="btn btn-primary" type="button" data-ourschool-action="setPBStart">
+									<button class="btn btn-primary" type="button" ng-click="setPBStart()">
 										<span class="glyphicon glyphicon-film"></span>
 									</button>
 								</span>
-								<input type="text" class="form-control" placeholder="{{ i18n.literals.START }}" ng-model="lesson.pbstart">
+								<input type="text" class="form-control" placeholder="{{ i18n.literals.START }}" ng-model="lesson.pbstart" readonly>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group">
 								<span class="input-group-btn">
-									<button class="btn btn-primary" type="button" data-ourschool-action="setPBStop">
+									<button class="btn btn-primary" type="button" ng-click="setPBStop()">
 										<span class="glyphicon glyphicon-film"></span>
 									</button>
 								</span>
-								<input type="text" class="form-control" placeholder="{{ i18n.literals.STOP }}" ng-model="lesson.pbstop">										
+								<input type="text" class="form-control" placeholder="{{ i18n.literals.STOP }}" ng-model="lesson.pbstop" readonly>
 							</div>
-							<span class="help-block">{{ i18n.literals.PLAYBACK }}</span>
+							<span class="help-block" ng-bind="i18n.literals.PLAYBACK"></span>
 						</div>
 					</fieldset>
 				</form>
@@ -62,20 +60,84 @@
 	</div>
 </div>
 <div class="row" style="padding-top: 5px">
-	<div class="panel panel-info">
+	<div class="panel panel-info" ng-controller="QuestionsCtrl">
 		<div class="panel-heading">
-			<h3 class="panel-title">Questions
-				<span class="glyphicon glyphicon-plus pull-right" id="add-question" style="cursor: pointer;" data-toggle="modal" data-target="#question"></span>
+            <h3 class="panel-title">
+                <span>{{ i18n.literals.QUESTIONS }}</span>
+				<span class="glyphicon glyphicon-plus pull-right" style="cursor: pointer;" ng-click="newQuestion()"></span>
 			</h3>
 		</div>
 		<table class="table">
 			<thead>
-				<tr><th>#</th><th>Question</th><th>Type</th><th>Link</th><th>Actions</th></tr>							
+				<tr><th>#</th><th ng-bind="i18n.literals.QUESTION"></th><th ng-bind="i18n.literals.TYPE"></th><th ng-bind="i18n.literals.LINK"></th>
+                    <th ng-bind="i18n.literals.ACTIONS"></th>
+                </tr>
 			</thead>
 			<tbody>
+                <tr ng-repeat="question in lesson.questions">
+                    <td>{{ $index+1 }}<span class="glyphicon glyphicon-warning-sign" ng-show="question.dirty"></span></td><td>{{ question.text }}</td>
+                    <td>
+                        <span class="glyphicon glyphicon-list" ng-show="question.type=='multi'"></span>
+                        <span class="glyphicon glyphicon-font" ng-show="question.type=='single'"></span>
+                    </td>
+                    <td><span class="glyphicon glyphicon-film" ng-show="question.link"></span></td>
+                    <td>
+                        <span class="glyphicon glyphicon-pencil text-success" ng-click="editQuestion(question)" style="cursor: pointer;"></span>
+				        <span class="glyphicon glyphicon-remove text-danger" ng-click="removeQuestion(question, $index)" style="cursor: pointer;"></span>
+                    </td>
+                </tr>
 			</tbody>
 		</table>
+        <script type="text/ng-template" id="confirmation.html">
+            <div class="modal-header">
+                <h3 class="modal-title" ng-bind="i18n.literals.DEL_QUESTION"></h3>
+            </div>
+            <div class="modal-body">
+                <p ng-bind="i18n.literals.CONFIRMATION_MSG"></p>
+                <p ng-bind="question.text"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" ng-click="cancel()" ng-bind="i18n.literals.CANCEL"></button>
+            </div>
+        </script>
 	</div>
 </div>
-
-  
+<div class="row" style="padding-top: 5px">
+	<div class="panel panel-success" ng-controller="StudentsCtrl">
+		<div class="panel-heading">
+            <h3 class="panel-title">
+                <span>{{ i18n.literals.STUDENTS }}</span>
+				<span class="glyphicon glyphicon-plus pull-right" style="cursor: pointer;" ng-click="addStudent()"></span>
+			</h3>
+		</div>
+		<table class="table">
+			<thead>
+				<tr><th>#</th><th ng-bind="i18n.literals.LAST"></th><th ng-bind="i18n.literals.FIRST"></th><th ng-bind="i18n.literals.EMAIL"></th>
+                    <th ng-bind="i18n.literals.ACTIONS"></th>
+                </tr>
+			</thead>
+			<tbody>
+        <tr ng-repeat="student in lesson.students">
+          <td>{{ $index+1 }}</td><td>{{::student.last}}</td><td>{{::student.first}}</td><td>{{::student.email}}</td>
+          <td>
+            <span class="glyphicon glyphicon-remove text-danger" ng-click="removeStudent($index)" style="cursor: pointer;"></span>
+          </td>
+        </tr>
+			</tbody>
+		</table>
+        <script type="text/ng-template" id="confirmation.html">
+            <div class="modal-header">
+                <h3 class="modal-title" ng-bind="i18n.literals.DEL_QUESTION"></h3>
+            </div>
+            <div class="modal-body">
+                <p ng-bind="i18n.literals.CONFIRMATION_MSG"></p>
+                <p ng-bind="question.text"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="ok()">OK</button>
+                <button class="btn btn-warning" ng-click="cancel()" ng-bind="i18n.literals.CANCEL"></button>
+            </div>
+        </script>
+	</div>
+</div>

@@ -15,7 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/jumbotron-narrow.css" rel="stylesheet">
-
+      <link href="/css/ourschool.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
@@ -45,7 +45,18 @@
       <div class="jumbotron">
         <h1>Our School</h1>
         <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="{! url|safe !}" role="button">Sign in</a></p>
+<!--        <p><a class="btn btn-lg btn-success" href="{! url|safe !}" role="button">Sign in</a></p>-->
+<!--        <div id="customBtn" class="customGPlusSignIn">-->
+<!--            <a href="{! url|safe !}" id="customBtn" class="customGPlusSignIn">-->
+          <a href="/glogin" id="customBtn" class="customGPlusSignIn">
+          <span class="icon"></span>
+          <span class="buttonText">Google</span>
+            </a>
+          <a href="/fblogin" id="customBtn2" class="customGPlusSignIn">
+          <span class="iconfb"></span>
+          <span class="buttonText">facebook</span>
+            </a>
+<!--        </div>-->
       </div>
 
       <div class="row marketing">

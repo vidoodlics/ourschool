@@ -1,9 +1,9 @@
 var controllers = angular.module( 'controllers', [] );
 
-controllers.config( [ '$httpProvider', function ( $httpProvider ) { 
+controllers.config( [ '$httpProvider', function ( $httpProvider ) {
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
- 
+
 	/**
 	 * The workhorse; converts an object to x-www-form-urlencoded serialization.
 	 * @param {Object} obj
@@ -14,7 +14,7 @@ controllers.config( [ '$httpProvider', function ( $httpProvider ) {
 
 	for(name in obj) {
 		value = obj[name];
-  
+
 		if(value instanceof Array) {
 			for( i=0; i<value.length; ++i ) {
 				subValue = value[ i ];
@@ -34,7 +34,7 @@ controllers.config( [ '$httpProvider', function ( $httpProvider ) {
 		} else if( value !== undefined && value !== null )
         query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
 	}
-      
+
 	return query.length ? query.substr(0, query.length - 1) : query;
 	};
 	// Override $http service's default transformRequest
@@ -45,12 +45,12 @@ controllers.config( [ '$httpProvider', function ( $httpProvider ) {
 
 controllers.controller( 'LessonCtrl', [ '$scope', '$interval', 'lesson', '$log', function ( $scope, $interval, lesson, $log ) {
 	var initialLd, player, sliderUpdate;
-	
+
 	$scope.lesson = lesson;
-	$scope.slider = {
+/*	$scope.slider = {
 		floor: 0,
-		ceiling: 50	
-	};
+		ceiling: 50
+	};*/
 	player = new YT.Player('player', {
 		playerVars: { 'controls': 0 },
 		events: {
@@ -69,6 +69,7 @@ controllers.controller( 'LessonCtrl', [ '$scope', '$interval', 'lesson', '$log',
 //						$slider.simpleSlider( { theme: 'volume', highlight: true, range: [ 0, videoDuration ] } );
 						lesson.pbstart = 0;
 						lesson.pbstop = Math.floor( videoDuration );
+            $scope.slider.to = lesson.pbstop;
 						$scope.$digest();
 //						$( "#pbrange input[name=pbstart]" ).val( 0 );
 //						$( "#pbrange input[name=pbstop]" ).val( Math.floor( videoDuration ) );
@@ -84,7 +85,7 @@ controllers.controller( 'LessonCtrl', [ '$scope', '$interval', 'lesson', '$log',
 						$interval.cancel( $scope.sliderUpdate );
 						$scope.sliderUpdate = undefined;
 					}
-				}				
+				}
 			},
 			'onError': onPlayerError
 		}
@@ -93,7 +94,7 @@ controllers.controller( 'LessonCtrl', [ '$scope', '$interval', 'lesson', '$log',
 		if ( newValue ) {
 			var videourl = newValue;
 			var patt = /(\x2Fv\x2F(.+)\x3Fversion=)|(\x2Fwatch\x3Fv=(.+))/;
-			
+
 			var m = videourl.match( patt );
 			if ( m != null ) {
 				video = m[ 2 ] || m[ 4 ];
@@ -106,26 +107,27 @@ controllers.controller( 'LessonCtrl', [ '$scope', '$interval', 'lesson', '$log',
 			initialLd = true;
 		}
 	} );
-	$scope.$on( '$destroy', function () { 
+	$scope.$on( '$destroy', function () {
 		if ( angular.isDefined( $scope.sliderUpdate ) ) {
 			$interval.cancel( $scope.sliderUpdate );
 			$scope.sliderUpdate = undefined;
 		}
 	} );
 	$scope.value = "1";
-	$scope.slider = {       
+	$scope.slider = {
 		from: 1,
 		to: 100,
 		step: 1,
-		dimension: " km",
-		css: {
+		dimension: " sec",
+/*		css: {
 			background: {"background-color": "silver"},
 			before: {"background-color": "purple"},
 			default: {"background-color": "white"},
 			after: {"background-color": "green"},
-			pointer: {"background-color": "red"}          
-		},
+			pointer: {"background-color": "red"}
+		},*/
 		realtime: true,
+    skin: 'blue',
 		callback: function ( value, released ) {
 			if ( angular.isDefined( $scope.sliderUpdate ) ) {
 				$interval.cancel( $scope.sliderUpdate );
