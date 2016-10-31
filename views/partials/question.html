@@ -1,0 +1,76 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" ng-bind="title"></h4>
+    </div>
+    <form name="form" novalidate>
+        <div class="modal-body">
+            <div class="bg-danger" ng-show="form.$submitted">
+<!--                <p ng-bind="i18n.literals.ERRORS"></p>-->
+                <ul>
+                    <li ng-show="form.qtext.$error.required" ng-bind="i18n.literals.QTEXT_ERR"></li>
+                </ul>
+            </div>
+            <div class="bg-warning" ng-show="form.$submitted || question.dirty">
+<!--                <p ng-bind="i18n.literals.WARNINGS"></p>-->
+                <ul>
+                    <div ng-show="question.type=='single'">
+                        <li ng-show="form.atext.$error.required" ng-bind="i18n.literals.ATEXT_WRN"></li>
+                    </div>
+                    <div ng-show="question.type=='multi'">
+                        <li ng-show="question.answers.length==0" ng-bind="i18n.literals.NOANSWERS_WRN"></li>
+                        <li ng-show="!question.correct && question.answers.length != 0" ng-bind="i18n.literals.CORRECT_WRN"></li>
+                        <li ng-repeat="answer in question.answers" ng-show="form.text{{$index}}.$error.required"
+                            ng-bind="i18n.literals.NUMANSWER_WRN+{{$index}}"></li>
+                        <li ng-show="question.answers.length==1" ng-bind="i18n.literals.QTYPE_WRN"></li>
+                    </div>
+                </ul>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error': ( form.$submitted || form.qtext.$touched ) && form.qtext.$error.required }">
+                <label for="qtext" ng-bind="i18n.literals.QUESTION"></label>
+                <textarea class="form-control" rows="2" name="qtext" ng-model="question.text" required></textarea>
+            </div>
+            <div class="form-group">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="question.type" btn-radio="'multi'">
+                            <span class="glyphicon glyphicon-list"></span>
+                        </label>
+                        <label class="btn btn-primary" ng-model="question.type" btn-radio="'single'">
+                            <span class="glyphicon glyphicon-font"></span>
+                        </label>
+                    </div>
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-class="{ active: question.link }" ng-click="linkTo()">
+                            <span class="glyphicon glyphicon-film"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <fieldset ng-show="question.type=='multi'">
+                <label ng-bind="i18n.literals.ANSWERS"></label>
+                <span>
+                    <label class="btn btn-primary btn-sm" ng-click="addAnswer()" ng-bind="i18n.literals.ADD" ng-disabled="question.answers.length==4"></label>
+                    <button class="btn btn-warning btn-sm" ng-click="removeAnswers()" ng-bind="i18n.literals.REMOVE"
+                            ng-disabled="question.answers.length==0"></button>
+                </span>
+                <div class="input-group" ng-repeat="answer in question.answers" style="margin-top: 5px;"
+                     ng-class="{ 'has-error': ( form.$submitted || form.text{{$index}}.$touched ) && form.text{{$index}}.$error.required }">
+                    <span class="input-group-addon"><input type="checkbox" ng-model="answer.checked"></span>
+                    <input type="text" name="text{{ $index }}" ng-model="answer.text" class="form-control" required>
+                    <span class="input-group-addon"><input type="radio" ng-model="question.correct" value="{{ $index }}"></span>
+                </div>
+            </fieldset>
+            <fieldset ng-show="question.type=='single'" ng-class="{ 'has-error': ( form.$submitted || form.atext.$touched ) && form.atext.$error.required }">
+                <label ng-bind="i18n.literals.ANSWER"></label>
+                <textarea class="form-control" name="atext" ng-model="question.answers[0].text" rows="3" required></textarea>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()" ng-bind="i18n.literals.CANCEL"></button>
+            <button type="submit" class="btn btn-primary" ng-click="ok()" ng-bind="i18n.literals.SAVE"></button>
+        </div>
+    </form>
+</div>

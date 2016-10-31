@@ -1,0 +1,26 @@
+<h1 class="page-header" ng-bind="i18n.literals.LESSON+': {!lesson.descr!}'"></h1>
+<table class="table">
+  <thead>
+    <tr><th></th>
+    {% for q in lesson.questions %}
+      {% if q in questions %}
+        <th class="text-center"><span uib-tooltip="{!questions[q]!}">#{!loop.index!}</span></th>
+      {% endif %}
+    {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for s in lesson.students %}
+    {% if last_views[s] is defined %}
+      <tr>
+        <td><a href="{! '#/lessons/' ~ lesson.id ~ '/students_statistics/' ~ s !}">{!students[s].last!}<br>{!students[s].first!}</a></td>
+      {% for q in lesson.questions %}
+        {% if q in questions %}
+          <td class="{! 'bg-success' if last_views[s][q] is defined and last_views[s][q] == True else 'bg-danger' !}"></td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+    {% endif %}
+  {% endfor %}
+  </tbody>
+</table>

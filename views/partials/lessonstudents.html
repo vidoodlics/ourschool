@@ -1,0 +1,26 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" ng-bind="i18n.literals.ADD_STUDENT"></h4>
+    </div>
+    <form name="form" novalidate>
+        <div class="modal-body">
+          <div ng-if="students.length>0">
+            <div class="checkbox" ng-repeat="student in students track by student.id">
+              <label>
+                <input type="checkbox" ng-model="student.selected">{{::student.last}}, {{::student.first}}, {{::student.email}}
+              </label>
+            </div>
+          </div>
+          <div ng-if="students.length==0">
+            <p ng-bind="i18n.literals.NO_MORE_STUDENTS"></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()" ng-bind="i18n.literals.CANCEL"></button>
+            <button type="submit" class="btn btn-primary" ng-click="ok()" ng-bind="i18n.literals.SAVE"></button>
+        </div>
+    </form>
+</div>

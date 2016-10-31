@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="students">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Spyros Sagiadinos" >
+	<link rel="icon" href="/favicon.ico">
+	<title>Dashboard Template for Bootstrap</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/flag-icon.min.css" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="/css/angular-awesome-slider.min.css">
+	<!-- <link href="/css/ng-slider.min.css" rel="stylesheet" type="text/css" /> -->
+	<!-- Custom styles for this template -->
+	<link href="/css/teacher.css" rel="stylesheet">
+
+	<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+	<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+	<script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body ng-controller="StudentsCtrl">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+            <a class="navbar-brand" href="#/" ng-bind="i18n.literals.PROJECT"></a>
+		</div>
+		<div collapse="isCollapsed">
+			<ul class="nav navbar-nav navbar-right">
+                <li><a href="#/album" ng-bind="i18n.literals.HELP"></a></li>
+				<li class="dropdown" dropdown>
+					<a href class="dropdown-toggle" dropdown-toggle>{! mail !}<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+                        <li><a href="#/">Profile</a></li>
+						<li class="divider"></li>
+						<li><a href="{! url|safe !}">Logout</a></li>
+					</ul>
+				</li>
+				<li>
+					<p class="navbar-text">
+						<span class="flag-icon flag-icon-gr" ng-click="language='el'"></span>
+						<span class="flag-icon flag-icon-gb" ng-click="language='gb'"></span>
+					</p>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container-fluid">
+	<div class="row" ng-view style="padding: 0 20px;"></div>
+</div>
+<script type="text/ng-template" id="teachers-list.html">
+    <div class="col-sm-3" ng-repeat="teacher in teachers">
+        <a ng-href="#/teachers/{{teacher.id}}/lessons"><img class="img-responsive" src="/img/no_image.jpg" /></a>
+        <label class="btn btn-success btn-block">{{teacher.first}} {{teacher.last}} <span class="badge" ng-bind="{{teacher.lessons}}"></span></label>
+    </div>
+</script>
+<script type="text/ng-template" id="lessons-list.html">
+    <div class="col-sm-3" ng-repeat="lesson in lessons.lessons">
+        <a ng-href="#/teachers/{{lessons.teacher_id}}/lessons/{{lesson.id}}" class="btn btn-info btn-block" ng-bind="lesson.descr" style="margin-top: 5px;"></a>
+    </div>
+</script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="/js/angular.min.js"></script>
+	<script src="/js/angular-route.min.js"></script>
+	<script src="/js/angular-touch.min.js"></script>
+	<script src="/js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+   <script type="text/javascript" src="/js/angular-awesome-slider.min.js"></script>
+<!--	<script src="/js/ng-slider.min.js"></script> -->
+<!--    <script src="/js/docs.min.js"></script>-->
+<!--	<script src="/js/lesson.js"></script>-->
+	<script src="/js/students.js"></script>
+<!--    <script src="/js/questions.js"></script>-->
+<!--    <script src="/js/handlebars.js"></script>-->
+
+<!--    <script type="text/javascript" >
+		var MULTI = {! MULTI !};
+		var SINGLE = {! SINGLE !};
+		var teacher = {
+			id: '{! teacher_id !}',
+			mail: '{! teacher !}',
+			lessons: [
+			{% for lesson in lessons %}
+				{ descr: '{! lesson.descr|e !}', id:  '{! lesson.key.id() !}' },
+			{% endfor %}
+			]
+		};
+		var teacher_id = '{! teacher_id !}';
+	 </script>-->
+  </body>
+</html>

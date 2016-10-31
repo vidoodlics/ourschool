@@ -1,0 +1,29 @@
+<div>
+    <h1 class="page-header" ng-bind-template="{{i18n.literals.LESSON}}: {{::lesson.descr}}" style="margin-top: 5px;"></h1>
+</div>
+<div class="row">
+	<div class="col-sm-7 col-md-7 col-lg-7">
+        <div class="col-sm-5 col-md-5 col-lg-5" style="position: fixed;">
+		<div class="embed-responsive embed-responsive-16by9">
+			<div id="player" class="embed-responsive-item"></div>
+		</div>
+		<input ng-model="value" type="text" slider options="slider" />
+        <div id="chart" class="bg-success" style="margin-top: 10px;"></div>
+        </div>
+	</div>
+    <div class="col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7">
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-info text-center">
+              <a ng-href="#/lessons/{{lesson.id}}/students_statistics", ng-bind-template="{{i18n.literals.STUDENTS}}: {{::stats.no_students}}"></a>
+            </li>
+            <li class="list-group-item list-group-item-info text-center" ng-bind-template="{{i18n.literals.VIEWS}}: {{::stats.no_views}}"></li>
+            <li class="list-group-item list-group-item-info text-center" ng-bind-template="{{i18n.literals.QUESTIONS}}: {{::stats.no_questions}}"></li>
+            <li class="list-group-item list-group-item-info text-center" ng-bind-template="{{i18n.literals.MULTIPLE}}: {{::stats.no_multi}}"></li>
+            <li class="list-group-item list-group-item-info text-center"
+               ng-bind-template="{{i18n.literals.SUCCESSFULL}}: {{::(stats.correct / (stats.correct + stats.error)) * 100 | number:2}}%"></li>
+            <li class="list-group-item list-group-item-success" ng-repeat="question in lesson.questions | filter:{type: 'm', dirty: 0}"
+                ng-bind-template="{{::question.text}}: {{::(stats.multi[question.id].right/(stats.multi[question.id].right+stats.multi[question.id].wrong)) * 100 | number:2}}%"></li>
+        </ul>
+    </div>
+</div>
+

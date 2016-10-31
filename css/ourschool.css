@@ -1,0 +1,52 @@
+#customBtn {
+  display: inline-block;
+  background: #4285f4;
+  color: white;
+  width: 190px;
+  border-radius: 5px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+#customBtn2 {
+  display: inline-block;
+  background: #354c8c;
+  color: white;
+  width: 190px;
+  border-radius: 5px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+span.label {
+  font-weight: bold;
+}
+
+span.icon {
+  background: url('/img/g-normal.png') transparent 5px 50% no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+  border-right: #2265d4 1px solid;
+}
+
+span.iconfb {
+  background: url('/img/fb.png') transparent 5px 50% no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+  border-right: #1c44bb 1px solid;
+}
+
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 30px;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
+  /* Use the Roboto font that is loaded in the <head> */
+  font-family: 'Roboto', sans-serif;
+}

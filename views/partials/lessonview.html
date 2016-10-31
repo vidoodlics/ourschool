@@ -1,0 +1,36 @@
+<div>
+    <div class="pull-right">
+        <button class="btn btn-primary btn-lg" ng-click="submit()" ng-bind="i18n.literals.SEND"></button>
+    </div>
+    <h1 class="page-header" ng-bind-template="{{i18n.literals.LESSON}}: {{::lesson.descr}}" style="margin-top: 5px;"></h1>
+</div>
+<div class="row">
+	<div class="col-sm-7 col-md-7 col-lg-7" style="position: fixed">
+		<div class="embed-responsive embed-responsive-16by9">
+			<div id="player" class="embed-responsive-item"></div>
+		</div>
+		<input ng-model="value" type="text" slider options="slider" />
+	</div>
+    <div class="col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7">
+        <uib-accordion>
+            <uib-accordion-group ng-repeat="question in lesson.questions" heading="{{question.text}}" is-open="question.open">
+                <uib-accordion-heading>
+                    {{ question.text }}
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': question.open, 'glyphicon-chevron-right': !question.open}"></i>
+                </uib-accordion-heading>
+                <fieldset ng-if="question.type=='multi'">
+                    <label ng-bind="i18n.literals.ANSWERS"></label>
+                    <div class="input-group" ng-repeat="answer in question.answers" style="margin-top: 5px;">
+                        <input type="text" name="text{{ $index }}" value="{{::answer}}" class="form-control" required readonly>
+                        <span class="input-group-addon"><input type="radio" ng-model="question.correct" value="{{ $index }}"></span>
+                    </div>
+                </fieldset>
+                <fieldset ng-if="question.type=='single'">
+                    <label ng-bind="i18n.literals.ANSWER"></label>
+                    <textarea class="form-control" name="atext" ng-model="question.answer" rows="3" required></textarea>
+                </fieldset>
+            </uib-accordion-group>
+        </uib-accordion>
+    </div>
+</div>
+

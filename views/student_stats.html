@@ -1,0 +1,39 @@
+<h1 class="page-header">
+  {!student.first!} {!student.last!}
+</h1>
+<div class="row">
+	<div class="col-sm-7 col-md-7 col-lg-7">
+    <div class="col-sm-5 col-md-5 col-lg-5" style="position: fixed;">
+      <div class="embed-responsive embed-responsive-16by9">
+        <div id="player" class="embed-responsive-item"></div>
+      </div>
+      <input ng-model="value" type="text" slider options="slider" />
+      <div id="chart" class="bg-success" style="margin-top: 10px;"></div>
+    </div>
+	</div>
+  <div class="col-sm-5 col-sm-offset-7 col-md-5 col-md-offset-7 col-lg-5 col-lg-offset-7">
+    <uib-accordion ng-init="status = []">
+    {% for ans in answers %}
+      {% if ans.correct is defined %}
+        <uib-accordion-group is-open="status[{! loop.index0 !}]" panel-class="{! 'panel-success' if ans.correct == True else 'panel-danger' !}">
+      {% elif ans.text is defined %}
+        <uib-accordion-group is-open="status[{! loop.index0 !}]">
+      {% else %}
+        <uib-accordion-group is-open="status[{! loop.index0 !}]" panel-class="panel-warning">
+      {% endif%}
+          <uib-accordion-heading>
+            {! ans.question !}
+            <i class="pull-right glyphicon"
+               ng-class="{'glyphicon-chevron-down': status[{! loop.index0 !}], 'glyphicon-chevron-right': !status[{! loop.index0 !}]}"></i>
+          </uib-accordion-heading>
+          {% if ans.text is defined %}
+            {! ans.text !}
+          {% else %}
+            {{ i18n.literals.NOT_ANSWERED }}
+          {% endif %}
+        </uib-accordion-group>
+    {% endfor %}
+    </uib-accordion>
+  </div>
+</div>
+
